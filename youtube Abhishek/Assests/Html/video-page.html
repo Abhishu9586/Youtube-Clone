@@ -1,0 +1,77 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Video</title>
+    <style>
+        body{
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #video-container{
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container"></div>
+
+    <script>
+       // Set the video embed HTML in session storage
+       sessionStorage.setItem("videoEmbedHtml", "<iframe width='100%' height='500' src='https://www.youtube.com/embed/dQw4w9WgXcQ' frameborder='0' allowfullscreen></iframe>");
+
+       // Retrieve the video embed HTML from session storage
+       const embedHtml = sessionStorage.getItem("videoEmbedHtml");
+
+       if(embedHtml){
+        const playerContainer = document.getElementById("video-container");
+        playerContainer.innerHTML = embedHtml;
+       }
+       else{
+        alert("Video embed code not found.");
+       }
+    </script>
+</body>
+</html> -->
+<!-- Create a container for the videos -->
+<div id="video-container">
+    <!-- Create an empty div to hold the video iframes -->
+    <div id="video-list"></div>
+  </div>
+  
+  <!-- JavaScript code to play multiple videos -->
+  <script>
+    // Replace with your YouTube API key
+    const apiKey = "AIzaSyDD5BpZSzVz_mh1w079o8sZ2mpvsa6_gt8";
+  
+    // Search query
+    const searchQuery = "javascript tutorials";
+  
+    // Function to create an iframe for each video
+    function createVideoIframe(video) {
+      const iframe = document.createElement("iframe");
+      iframe.width = "100%";
+      iframe.height = "500";
+      iframe.frameborder = "0";
+      iframe.allowfullscreen = true;
+      iframe.src = `https://www.youtube.com/embed/${video.id.videoId}?autoplay=1&enablejsapi=1&origin=http://example.com`;
+      return iframe;
+    }
+  
+    // Make a search request to the YouTube API
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=id,snippet&q=${searchQuery}&key=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        // Loop through the search results and create an iframe for each video
+        data.items.forEach((video) => {
+          const iframe = createVideoIframe(video);
+          document.getElementById("video-list").appendChild(iframe);
+        });
+      })
+      .catch(error => console.error(error));
+  </script>
